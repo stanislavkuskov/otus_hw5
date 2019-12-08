@@ -4,57 +4,34 @@
 #include <tuple>
 
 
-template<class T>
-std::enable_if_t<std::is_integral_v<T>, std::string> print_ip(const T &);
-
-template<class T>
-std::enable_if_t<std::is_floating_point_v<T>, std::string> print_ip(const T &);
-
-
-void print_ip(const char &ip)
+// для string
+void print_ip(const std::string& ip)
 {
     std::cout << ip << std::endl;
 }
 
-void print_ip(const short &ip)
-{
+// для остальных (char, short etc)
+template<typename T>
+        std::enable_if_t <std::is_integral_v<T>, void>
+print_ip(const T & ip){
     std::cout << ip << std::endl;
-}
+};
 
-void print_ip(const long &ip)
+// для вектора и листа
+template<typename T>
+std::enable_if_t <
+        std::is_same_v<T, std::vector<typename T::value_type>> ||
+        std::is_same_v<T, std::list<typename T::value_type>>,
+        void>
+print_ip(const T& ip)
 {
-    std::cout << ip << std::endl;
-}
-
-void print_ip(const std::string &ip)
-{
-    std::cout << ip << std::endl;
-}
-
-void print_ip(const int &ip)
-{
-    std::cout << ip << std::endl;
-}
-
-void print_ip(const double &ip)
-{
-    std::cout << ip << std::endl;
-}
-
-template <typename T>
-void print_ip(const std::vector<T> &ip)
-{
-    for (const T& oct: ip){
-        std::cout << oct << ".";
-    }
-    std::cout << std::endl;
-}
-
-template <typename T>
-void print_ip(const std::list<T> &ip)
-{
-    for (const T& oct: ip){
-        std::cout << oct << ".";
+    for (auto oct = ip.cbegin(); oct != ip.cend(); ++oct)
+    {
+        if (oct != ip.cbegin())
+        {
+            std::cout << ".";
+        }
+        std::cout << *oct;
     }
     std::cout << std::endl;
 }
@@ -73,19 +50,13 @@ int main() {
     print_ip(long(8875824491850138409));
     std::cout << std::endl;
 
-    print_ip(std::string("192.168.1.1"));
+    print_ip(std::string("1.1.1.1"));
     std::cout << std::endl;
 
     print_ip(std::vector<int>{192, 168, 1, 1});
     std::cout << std::endl;
 
-    print_ip(std::vector<std::string>{"192", "168", "1", "1"});
-    std::cout << std::endl;
-
     print_ip(std::list<int>{192, 168, 1, 3});
-    std::cout << std::endl;
-
-    print_ip(std::list<std::string>{"192", "168", "1", "3"});
     std::cout << std::endl;
 
 }
