@@ -10,7 +10,7 @@ configure_file(version.h.in ${PROJECT_SOURCE_DIR}/version.h)
 
 add_executable(print_ip main.cpp)
 
-set_target_properties(print_ip print_ip_lib test_version PROPERTIES
+set_target_properties(print_ip PROPERTIES
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED ON
         COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra"
