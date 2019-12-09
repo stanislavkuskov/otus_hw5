@@ -37,7 +37,7 @@ print_ip(const T& ip)
 }
 
 
-int main() {
+int main(int argc, char const *argv[]) {
     print_ip(char(-1));
     std::cout << std::endl;
 
