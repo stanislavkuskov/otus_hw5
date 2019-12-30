@@ -11,11 +11,17 @@ void print_ip(const std::string& ip)
 }
 
 // для остальных (char, short etc)
-template<typename T>
-        std::enable_if_t <std::is_integral_v<T>, void>
+template<typename T> std::enable_if_t <std::is_integral_v<T>, void>
 print_ip(const T & ip){
-    std::cout << ip << std::endl;
-};
+//    https://stackoverflow.com/questions/1680365/integer-to-ip-address-c
+//  full-stackoverflow developement
+    std::cout <<
+    ((ip >> 24) & 0xFF) << "." <<
+    ((ip >> 16) & 0xFF) << "." <<
+    ((ip >> 8) & 0xFF) << "." <<
+    (ip & 0xFF) <<
+    std::endl;
+}
 
 // для вектора и листа
 template<typename T>
@@ -37,7 +43,8 @@ print_ip(const T& ip)
 }
 
 
-int main(int argc, char const *argv[]) {
+int main() {
+
     print_ip(char(-1));
     std::cout << std::endl;
 
