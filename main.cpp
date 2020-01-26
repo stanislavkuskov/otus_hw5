@@ -14,13 +14,13 @@ void print_ip(const std::string& ip)
 template<typename T> std::enable_if_t <std::is_integral_v<T>, void>
 print_ip(const T & ip){
 //    https://stackoverflow.com/questions/1680365/integer-to-ip-address-c
-//  full-stackoverflow developement
-    std::cout <<
-    ((ip >> 24) & 0xFF) << "." <<
-    ((ip >> 16) & 0xFF) << "." <<
-    ((ip >> 8) & 0xFF) << "." <<
-    (ip & 0xFF) <<
-    std::endl;
+//  full-stackoverflow developement - my mod
+    int bytes = sizeof(ip);
+    while (bytes > 1){
+        std::cout << ((ip >> 8 * (bytes-1)) & 0xFF) << ".";
+        --bytes;
+    }
+    std::cout << (ip & 0xFF) << std::endl;
 }
 
 // для вектора и листа
