@@ -66,5 +66,4 @@ int main() {
     print_ip(std::list<int>{192, 168, 1, 3});
     std::cout << std::endl;
 
-
 }
